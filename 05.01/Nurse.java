@@ -1,6 +1,3 @@
-package hw;
-
-
 public class Nurse {
     private final String name;
     private int experienceYears;
