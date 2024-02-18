@@ -1,5 +1,3 @@
-package hw;
-
 public class Doctor {
     private final String name;
     private final String specialization;
