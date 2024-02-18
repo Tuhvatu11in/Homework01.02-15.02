@@ -1,5 +1,3 @@
-package hw;
-
 interface Flyable {
     double fly();
 }
