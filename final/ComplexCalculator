@@ -1,0 +1,95 @@
+import java.util.Scanner;
+
+public class ComplexCalculator {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        ComplexCalculatorService calculator = new ComplexCalculatorService();
+
+        int choice = 0;
+        System.out.println("\n===КАЛЬКУЛЯТОР КОМПЛЕКСНЫХ ЧИСЕЛ===\n");
+        
+        while(choice != 4) {
+            System.out.println("Выберите операцию:\n");
+            System.out.println("1: Сложение");
+            System.out.println("2: Умножение");
+            System.out.println("3: Деление");
+            System.out.println("4: Выйти\n");
+            choice = input.nextInt();
+
+            float a, b;
+            System.out.println("Введите a:");
+            a = input.nextFloat();
+            System.out.println("Введите b:");
+            b = input.nextFloat();
+            ComplexNumber complex1 = new ComplexNumber(a, b);
+            System.out.println("Введите c:");
+            a = input.nextFloat();
+            System.out.println("Введите d:");
+            b = input.nextFloat();
+            ComplexNumber complex2 = new ComplexNumber(a, b);
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Результат: " + calculator.add(complex1, complex2).toString());
+                    break;
+                case 2:
+                    System.out.println("Результат: " + calculator.multiply(complex1, complex2).toString());
+                    break;
+                case 3:
+                    System.out.println("Результат: " + calculator.divide(complex1, complex2).toString());
+                    break;
+                default:
+                    break;
+            }
+        }
+        System.out.println("\nУдачи!\n");
+    }
+}
+
+class ComplexCalculatorService {
+    public ComplexNumber add(ComplexNumber num1, ComplexNumber num2) {
+        return num1.add(num2);
+    }
+
+    public ComplexNumber multiply(ComplexNumber num1, ComplexNumber num2) {
+        return num1.multiply(num2);
+    }
+
+    public ComplexNumber divide(ComplexNumber num1, ComplexNumber num2) {
+        return num1.divide(num2);
+    }
+}
+
+class ComplexNumber {
+    private float real;
+    private float imaginary;
+
+    public ComplexNumber(float real, float imaginary) {
+        this.real = real;
+        this.imaginary = imaginary;
+    }
+
+    public ComplexNumber add(ComplexNumber num) {
+        return new ComplexNumber(this.real + num.real, this.imaginary + num.imaginary);
+    }
+
+    public ComplexNumber multiply(ComplexNumber num) {
+        float newReal = this.real * num.real - this.imaginary * num.imaginary;
+        float newImaginary = this.real * num.imaginary + this.imaginary * num.real;
+        
+        return new ComplexNumber(newReal, newImaginary);
+    }
+
+    public ComplexNumber divide(ComplexNumber num) {
+        float divisor = num.real * num.real + num.imaginary * num.imaginary;
+        ComplexNumber conjugate = new ComplexNumber(num.real, -num.imaginary);
+        ComplexNumber numerator = this.multiply(conjugate);
+        
+        return new ComplexNumber(numerator.real / divisor, numerator.imaginary / divisor);
+    }
+
+    @Override
+    public String toString() {
+        return "(" + this.real + " + " + this.imaginary + "i)";
+    }
+}
